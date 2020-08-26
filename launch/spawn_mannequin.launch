@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Spawn the mannequin -->
+    <include file="$(find model_description)/launch/spawn_urdf.launch">
+        <arg name="x" value="0.0" />
+        <arg name="y" value="0.0" />
+        <arg name="z" value="0.2" />
+        <arg 
+        name="urdf_robot_file"
+        value="$(find model_description)/urdf/mannequin_arm.urdf"
+        />
+        <arg name="robot_name" value="mannequin" />
+    </include>
+    
+    
+    <!-- Create a static transform from map to the mannequin -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map2baseframe" args="1 0 0 0 0 0 1 map base_link" />
+    
+    <!-- Broadcast robot joint transforms -->
+    <param name="robot_description" command="cat $(find model_description)/urdf/mannequin_arm.urdf" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_states_pub">
+    	<remap from="/joint_states" to="/mannequin/joint_states" /> 
+    </node>
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_pub">
+    	<remap from="/joint_states" to="/mannequin/joint_states" /> 
+    </node>
+    
+    
+    <!-- load the controllers -->
+    <rosparam file="$(find model_description)/config/mannequin.yaml" command="load"/>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/mannequin" 
+    args="left_shoulder_roll left_shoulder_pitch left_shoulder_yaw left_elbow"/>
+    
+   
+    
+    
+</launch>

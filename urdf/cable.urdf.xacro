@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cable">
+
+	<xacro:property name="radius" value="0.02" />
+	<xacro:property name="length" value="0.05" />
+	<xacro:property name="offset" value="-0.01" />
+	
+	<gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/cable</robotNamespace>
+        </plugin>
+    </gazebo>
+    
+    <link name="base_link">
+    	<visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+        </collision>
+	</link>
+    <gazebo reference="base_link">
+        <kp>500.0</kp>
+        <kd>500.0</kd>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+    
+    
+    <link name="cable_link_yaw_0">
+        <visual>
+            <origin rpy="0 0 0" xyz="${offset} ${offset} 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="${offset} ${offset} 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+        </collision>
+        <inertial>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+		    <mass value="0.01" />
+		    <inertia ixx="3.08333333333e-06" ixy="0.0" ixz="0.0" iyy="3.08333333333e-06" iyz="0.0" izz="2e-06"/>
+		</inertial>
+	</link>
+    <gazebo reference="cable_link_yaw_0">
+        <kp>500.0</kp>
+        <kd>500.0</kd>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+    
+    <joint name="base_link_joint" type="continuous">
+    	<parent link="base_link"/>
+	    <child link="cable_link_yaw_0"/>
+	    <axis xyz="1 0 0"/>
+	    <origin xyz="0 0 ${length}" rpy="0 0 0"/>
+    </joint>
+    
+    <!-- Macro to create many cable links -->
+    <!-- Cable links each have a number, and each number has a "roll" and "yaw" joint -->
+    <xacro:macro name="cable_links" params="number parent">
+    	<link name="cable_link_roll_${number}">
+    		<visual>
+    			<origin rpy="0 0 0" xyz="${offset} ${offset} 0"/>
+    			<geometry>
+    				<cylinder radius="${radius}" length="${length}"/>
+    			</geometry>
+        	</visual>
+        	<collision>
+		        <origin rpy="0 0 0" xyz="${offset} ${offset} 0"/>
+		        <geometry>
+		            <cylinder radius="${radius}" length="${length}"/>
+		        </geometry>
+		    </collision>
+		    <inertial>
+		        <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <mass value="0.01" />
+		        <inertia ixx="3.08333333333e-06" ixy="0.0" ixz="0.0" iyy="3.08333333333e-06" iyz="0.0" izz="2e-06"/>
+		    </inertial>
+    	</link>
+    	<gazebo reference="cable_link_roll_${number}">
+		    <kp>500.0</kp>
+		    <kd>500.0</kd>
+		    <mu1>10.0</mu1>
+		    <mu2>10.0</mu2>
+		    <material>Gazebo/White</material>
+		</gazebo>
+		
+		<link name="cable_link_yaw_${number}">
+    		<visual>
+    			<origin rpy="0 0 0" xyz="${offset} ${offset} 0"/>
+    			<geometry>
+    				<cylinder radius="${radius}" length="${length}"/>
+    			</geometry>
+        	</visual>
+        	<collision>
+		        <origin rpy="0 0 0" xyz="${offset} ${offset} 0"/>
+		        <geometry>
+		            <cylinder radius="${radius}" length="${length}"/>
+		        </geometry>
+		    </collision>
+		    <inertial>
+		        <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <mass value="0.01" />
+		        <inertia ixx="3.08333333333e-06" ixy="0.0" ixz="0.0" iyy="3.08333333333e-06" iyz="0.0" izz="2e-06"/>
+		    </inertial>
+    	</link>
+    	<gazebo reference="cable_link_yaw_${number}">
+		    <kp>500.0</kp>
+		    <kd>500.0</kd>
+		    <mu1>10.0</mu1>
+		    <mu2>10.0</mu2>
+		    <material>Gazebo/White</material>
+		</gazebo>
+    
+    	<joint name="cable_joint_roll_${number}" type="continuous">
+    		<parent link="cable_link_yaw_${parent}"/>
+		    <child link="cable_link_roll_${number}"/>
+		    <axis xyz="1 0 0"/>
+		    <origin xyz="0 0 ${length}" rpy="0 0 0"/>
+    	</joint>
+    	<joint name="cable_joint_yaw_${number}" type="continuous">
+    		<parent link="cable_link_roll_${number}"/>
+		    <child link="cable_link_yaw_${number}"/>
+		    <axis xyz="0 0 1"/>
+		    <origin xyz="0 0 ${length}" rpy="0 0 0"/>
+    	</joint>
+    
+    </xacro:macro>
+    
+    <xacro:cable_links number="1" parent="0"/>
+
+
+</robot>

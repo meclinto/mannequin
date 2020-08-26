@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <param name="robot_description" command="xacro --inorder '$(find model_description)/urdf/cable.urdf.xacro'" />
+
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -x 0 -y 0 -z 1  -model cable -param robot_description"/>
+    
+    
+    <!-- Create a static transform from map to the cable -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map2baseframe" args="1 0 0 0 0 0 1 map base_link" />
+    
+    <!-- Broadcast robot joint transforms -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_states_pub">
+    	<remap from="/joint_states" to="/cable/joint_states" /> 
+    </node>
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_pub">
+    	<remap from="/joint_states" to="/cable/joint_states" /> 
+    </node>
+</launch>
