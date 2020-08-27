@@ -1,0 +1,44 @@
+====================================================================
+Body Part Lengths
+Taken from "Kodak's Ergonomic Design for People at Work"
+U.S. Anthropometric Data (Champney 1979; Muller-Borer 1981; NASA 1978)
+====================================================================
+
+Total height: 1.62 m ==> Shoulder to top of head: 0.31 m 
+Shoulder height: 1.329 m ==> waist to shoulder: 0.293 m
+Waist Height: 1.017 m ==> Hip to waist: 0.207 m
+Standing elbow height: 1.026m
+Hip height: 0.81 m
+Upper-arm length: 0.341m
+Elbow-to-fist length: 0.348m ==> without hand: 0.256m
+Tibia Height: 0.42 m
+
+Foot length: 0.241 m
+Foot breadth: 0.089 m
+
+Hand length: 0.184 m
+Hand breadth: 0.077 m
+Digit 2 length: 0.069 m 
+
+Upper-leg: 0.574m
+Lower-leg: 0.433m
+
+
+====================================================================
+Body Part Weights
+Taken from "Weight, Volume, and Center of Mass of Human Body 
+Segments" (1969). 
+====================================================================
+Weight: 66.4kg
+
+Head: 4.7kg (7.1%)
+Torso: 30.6kg (46.3%) ==> Upper/lower = 15.3kg
+Entire arm: 3.9kg (5.9%)
+Upper Arm: 2.1kg (3.2%) ==> Lower arm: 1.8kg (2.7%)
+Hand: 0.5kg (0.8%)
+
+Thigh: 7.4kg (11.2%)
+Calf: 2.9kg (4.4%)
+Foot: 1.2kg (1.8%)
+
+Total up to 101.6%, likely due to rounding errors. Sum of kg measurement is 67.1kg (101.1% of original weight, I rounded down most of the measurements when simplifying)

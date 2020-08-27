@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Spawn the mannequin -->
+    <param name="robot_description" command="xacro --inorder '$(find mannequin)/urdf/mannequin_fully_articulated.urdf.xacro'" />
+
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -x 0 -y 0 -z 1  -model mannequin -param robot_description"/>
+    
+    
+    <!-- Create a static transform from map to the mannequin -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map2baseframe" args="1 0 0 0 0 0 1 map base_link" />
+    
+    <!-- Broadcast robot joint transforms -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_states_pub">
+    	<remap from="/joint_states" to="/mannequin/joint_states" /> 
+    </node>
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_pub">
+    	<remap from="/joint_states" to="/mannequin/joint_states" /> 
+    </node>
+    
+    <!-- load the controllers -->
+    <rosparam file="$(find mannequin)/config/mannequin_full.yaml" command="load"/>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/mannequin" 
+    args="left_shoulder_roll left_shoulder_pitch left_shoulder_yaw
+    	  left_elbow_flexion left_elbow_pronation
+    	  left_wrist_flexion left_wrist_deviation
+          right_shoulder_roll right_shoulder_pitch right_shoulder_yaw
+          right_elbow_flexion right_elbow_pronation
+    	  right_wrist_flexion right_wrist_deviation"/>
+</launch>

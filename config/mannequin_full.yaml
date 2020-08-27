@@ -1,0 +1,67 @@
+mannequin:
+    # Publish all joint states -----------------------------------
+    joint_state_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 50
+
+    # Position Controllers ---------------------------------------
+    left_shoulder_roll:
+      type: effort_controllers/JointPositionController
+      joint: left_shoulder_roll_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    left_shoulder_pitch:
+      type: effort_controllers/JointPositionController
+      joint: left_shoulder_pitch_joint
+      pid: {p: 25.0, i: 0.1, d: 1.0}
+    left_shoulder_yaw:
+      type: effort_controllers/JointPositionController
+      joint: left_shoulder_yaw_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    left_elbow_flexion:
+      type: effort_controllers/JointPositionController
+      joint: left_elbow_flexion_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    left_elbow_pronation:
+      type: effort_controllers/JointPositionController
+      joint: left_elbow_pronation_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    left_wrist_flexion:
+      type: effort_controllers/JointPositionController
+      joint: left_wrist_flexion_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    left_wrist_deviation:
+      type: effort_controllers/JointPositionController
+      joint: left_wrist_deviation_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    
+      
+      
+    right_shoulder_roll:
+      type: effort_controllers/JointPositionController
+      joint: right_shoulder_roll_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    right_shoulder_pitch:
+      type: effort_controllers/JointPositionController
+      joint: right_shoulder_pitch_joint
+      pid: {p: 25.0, i: 0.1, d: 1.0}
+    right_shoulder_yaw:
+      type: effort_controllers/JointPositionController
+      joint: right_shoulder_yaw_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    right_elbow_flexion:
+      type: effort_controllers/JointPositionController
+      joint: right_elbow_flexion_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    right_elbow_pronation:
+      type: effort_controllers/JointPositionController
+      joint: right_elbow_pronation_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    right_wrist_flexion:
+      type: effort_controllers/JointPositionController
+      joint: right_wrist_flexion_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+    right_wrist_deviation:
+      type: effort_controllers/JointPositionController
+      joint: right_wrist_deviation_joint
+      pid: {p: 25.0, i: 0.3, d: 1.0}
+

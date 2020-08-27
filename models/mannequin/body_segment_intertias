@@ -1,0 +1,35 @@
+====================================================================
+Body Part Interial Calculations
+====================================================================
+
+For the body parts, I used intertial standards for spheres, cylinders,
+or boxes, depending on what seemed closest to the particular body segment.
+See "mannequin/scripts/interia_calculator.py" for exact calculation 
+specifications. The body size measurements are from "Kodak's Ergonomic Design 
+for People at Work, "U.S. Anthropometric Data (Champney 1979; Muller-Borer 
+1981; NASA 1978), and the body segment weight measurements are from "Weight, 
+Volume, and Center of Mass of Human Body Segments" (1969).
+
+Head, estimated as a sphere r=.073m:
+	mass=4.7  Ix,Iy,Iz = 0.01001852
+	
+Upper/Lower Torso, estimated as a box w=.38 d=0.209 h=0.29:
+	mass=15.3 Iw=0.162920775, Id = 0.2913375, Ih = 0.239803275
+	
+Upper arm, estimated as cylinder r=0.042m h=.341m:
+	mass=2.1 Ix,Iy=0.021275275 , Iz = 0.0018522
+	
+Lower arm, estimated as cylinder r=0.035m h=0.256m:
+	mass=1.8 Ix,Iy=0.01038165,Iz = 0.0011025
+	
+Hand, estimated as box w=0.077, d=0.028 , h=0.184:
+	mass=0.5 Iw=0.00144333333333, Id=0.00165770833333, Ih=0.000279708333333
+	
+Thigh, estimated as cylinder r=0.062 h=.574:
+	mass=7.4 Ix,Iy=0.210288266667,Iz = 0.0142228
+	
+Lower Leg, estimate as cylinder r=0.056 h=.433:
+	mass=2.9 Ix,Iy=0.0475834416667,Iz = 0.0045472
+	
+Foot, estimated as box w=0.089 d=.028 h=0.241:
+	mass=1.2 Iw = 0.0058865, Id = 0.0066002, Ih = 0.0008705
