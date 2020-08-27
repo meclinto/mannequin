@@ -30,7 +30,7 @@
             <origin rpy="0.0 0 0" xyz="0 0 0"/>
             <geometry>
                 <!-- Material color set to white in blender -->
-                <mesh filename="package://model_description/models/mannequin/meshes/body_formatted.dae"/>
+                <mesh filename="package://mannequin/models/mannequin/meshes/body_formatted.dae"/>
             </geometry>
         </visual>
         <collision>
@@ -126,7 +126,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://model_description/models/mannequin/meshes/upper_arm_formatted.dae"/>
+                <mesh filename="package://mannequin/models/mannequin/meshes/upper_arm_formatted.dae"/>
             </geometry>
         </visual>
         <collision>
@@ -154,7 +154,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://model_description/models/mannequin/meshes/lower_arm_formatted.dae"/>
+                <mesh filename="package://mannequin/models/mannequin/meshes/lower_arm_formatted.dae"/>
             </geometry>
         </visual>
         <collision>
@@ -182,7 +182,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://model_description/models/mannequin/meshes/hand_formatted.dae"/>
+                <mesh filename="package://mannequin/models/mannequin/meshes/hand_formatted.dae"/>
             </geometry>
         </visual>
         <collision>
@@ -375,7 +375,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://model_description/models/mannequin/meshes/upper_arm_formatted.dae"/>
+                <mesh filename="package://mannequin/models/mannequin/meshes/upper_arm_formatted.dae"/>
             </geometry>
         </visual>
         <collision>
@@ -403,7 +403,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://model_description/models/mannequin/meshes/lower_arm_formatted.dae"/>
+                <mesh filename="package://mannequin/models/mannequin/meshes/lower_arm_formatted.dae"/>
             </geometry>
         </visual>
         <collision>
@@ -431,7 +431,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://model_description/models/mannequin/meshes/hand_formatted.dae"/>
+                <mesh filename="package://mannequin/models/mannequin/meshes/hand_formatted.dae"/>
             </geometry>
         </visual>
         <collision>

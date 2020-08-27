@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.83.5 commit date:2020-08-19, commit time:06:07, hash:c2b144df395f</authoring_tool>
     </contributor>
-    <created>2020-08-19T23:48:14</created>
-    <modified>2020-08-19T23:48:14</modified>
+    <created>2020-08-26T17:10:26</created>
+    <modified>2020-08-26T17:10:26</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -137,7 +137,7 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="Node_000001982B1DFCF0" name="Node_000001982B1DFCF0" type="NODE">
-        <matrix sid="transform">0.01531525 -0.9998634 0.00621379 -2.98023e-8 0.9998827 0.01531363 -3.07772e-4 0 2.12575e-4 0.006217775 0.9999806 0 0 0 0 1</matrix>
+        <matrix sid="transform">0.01047876 -0.9233743 0.003538641 -2.98023e-8 0.6841241 0.01414214 -1.75271e-4 0 1.45444e-4 0.005742118 0.5694708 0 0 0 0 1</matrix>
         <instance_geometry url="#meshId0_name-mesh" name="Node_000001982B1DFCF0">
           <bind_material>
             <technique_common>
