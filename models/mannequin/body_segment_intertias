@@ -25,8 +25,8 @@ Lower arm, estimated as cylinder r=0.035m h=0.256m:
 Hand, estimated as box w=0.077, d=0.028 , h=0.184:
 	mass=0.5 Iw=0.00144333333333, Id=0.00165770833333, Ih=0.000279708333333
 	
-Thigh, estimated as cylinder r=0.062 h=.574:
-	mass=7.4 Ix,Iy=0.210288266667,Iz = 0.0142228
+Thigh, estimated as cylinder r=0.095 h=.480:
+	mass=7.4 Ix,Iy=0.15877625,Iz = 0.0333925
 	
 Lower Leg, estimate as cylinder r=0.056 h=.433:
 	mass=2.9 Ix,Iy=0.0475834416667,Iz = 0.0045472

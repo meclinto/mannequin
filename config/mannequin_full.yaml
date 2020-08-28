@@ -5,63 +5,120 @@ mannequin:
       publish_rate: 50
 
     # Position Controllers ---------------------------------------
+    head_tilt:
+      type: effort_controllers/JointPositionController
+      joint: neck_joint
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+    torso_lr:
+      type: effort_controllers/JointPositionController
+      joint: torso_mid_joint
+      pid: {p: 100.0, i: 0.5, d: 1.0}
+      antiwindup: true 
+    
     left_shoulder_roll:
       type: effort_controllers/JointPositionController
       joint: left_shoulder_roll_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     left_shoulder_pitch:
       type: effort_controllers/JointPositionController
       joint: left_shoulder_pitch_joint
-      pid: {p: 25.0, i: 0.1, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     left_shoulder_yaw:
       type: effort_controllers/JointPositionController
       joint: left_shoulder_yaw_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     left_elbow_flexion:
       type: effort_controllers/JointPositionController
       joint: left_elbow_flexion_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     left_elbow_pronation:
       type: effort_controllers/JointPositionController
       joint: left_elbow_pronation_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.3, d: 5.0}
+      antiwindup: true 
     left_wrist_flexion:
       type: effort_controllers/JointPositionController
       joint: left_wrist_flexion_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 20.0, i: 0.3, d: 5.0}
+      antiwindup: true 
     left_wrist_deviation:
       type: effort_controllers/JointPositionController
       joint: left_wrist_deviation_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 20.0, i: 0.3, d: 5.0}
+      antiwindup: true 
     
       
       
     right_shoulder_roll:
       type: effort_controllers/JointPositionController
       joint: right_shoulder_roll_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     right_shoulder_pitch:
       type: effort_controllers/JointPositionController
       joint: right_shoulder_pitch_joint
-      pid: {p: 25.0, i: 0.1, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     right_shoulder_yaw:
       type: effort_controllers/JointPositionController
       joint: right_shoulder_yaw_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     right_elbow_flexion:
       type: effort_controllers/JointPositionController
       joint: right_elbow_flexion_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+      antiwindup: true 
     right_elbow_pronation:
       type: effort_controllers/JointPositionController
       joint: right_elbow_pronation_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 50.0, i: 0.3, d: 5.0}
+      antiwindup: true 
     right_wrist_flexion:
       type: effort_controllers/JointPositionController
       joint: right_wrist_flexion_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 20.0, i: 0.3, d: 5.0}
+      antiwindup: true 
     right_wrist_deviation:
       type: effort_controllers/JointPositionController
       joint: right_wrist_deviation_joint
-      pid: {p: 25.0, i: 0.3, d: 1.0}
+      pid: {p: 20.0, i: 0.3, d: 5.0}
+      antiwindup: true 
+      
+      
+    left_thigh:
+      type: effort_controllers/JointPositionController
+      joint: left_thigh_joint
+      pid: {p: 100.0, i: 0.5, d: 1.0}
+      antiwindup: true 
+    left_knee:
+      type: effort_controllers/JointPositionController
+      joint: left_knee_joint
+      pid: {p: 200.0, i: 0.5, d: 1.0}
+      antiwindup: true 
+    left_ankle:
+      type: effort_controllers/JointPositionController
+      joint: left_ankle_joint
+      pid: {p: 100.0, i: 0.5, d: 1.0}
+      antiwindup: true 
+      
+    right_thigh:
+      type: effort_controllers/JointPositionController
+      joint: right_thigh_joint
+      pid: {p: 100.0, i: 0.5, d: 1.0}
+      antiwindup: true 
+    right_knee:
+      type: effort_controllers/JointPositionController
+      joint: right_knee_joint
+      pid: {p: 200.0, i: 0.5, d: 1.0}
+      antiwindup: true 
+    right_ankle:
+      type: effort_controllers/JointPositionController
+      joint: right_ankle_joint
+      pid: {p: 100.0, i: 0.5, d: 1.0}
+      antiwindup: true 
 
