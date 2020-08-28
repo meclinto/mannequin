@@ -3,4 +3,4 @@ A Gazebo simulation of a mannequin based on anthropometric data for a woman in t
 
 To see the break down of body measurements, see /models/mannequin/measurement_breakdown. For a list of the body part masses and inertias, see /body_segment_intertias. 
 
-Presently, the model has some instability during high angle actuation, mostly around the arms. It is easily fully stabilized by removing the elbow pronation and wrist deviation links/joints however. In the future, I want to improve the inertial and collision definitions of the model, as well as fine tune the PID controllers, as I believe this is what needed to stabilize these joints with their full, anatomically accurate DOF at these joints.
+Presently, the model has some instability during high angle actuation, mostly around the arms. It is easily stabilized by removing the elbow pronation and wrist deviation links/joints. In the future, I want to improve the inertial and collision definitions of the model, as well as fine tune the PID controllers, as I believe this is what needed to stabilize these joints with their full, anatomically accurate DOF at these joints.
