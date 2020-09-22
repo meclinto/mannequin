@@ -226,14 +226,14 @@
         <child link="left_shoulder_pitch_link"/>
         <axis xyz="0 1 0"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <limit lower="-1.57" upper="0" effort="4" velocity="0.5"/>
+        <limit lower="-1.57" upper="0" effort="100" velocity="0.5"/>
     </joint>
     <joint name="left_shoulder_yaw_joint" type="revolute">
         <parent link="left_shoulder_pitch_link"/>
         <child link="left_shoulder_yaw_link"/>
         <axis xyz="0 0 1"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <limit lower="-1.1" upper="1.5" effort="1" velocity="0.5"/>
+        <limit lower="-1.1" upper="1.5" effort="100" velocity="0.5"/>
     </joint>
     
     
@@ -245,7 +245,7 @@
         <parent link="upper_left_arm_link"/>
         <child link="lower_left_arm_link"/>
         <axis xyz="1 0 0"/>
-        <limit lower="0.01" upper="3.0" effort="1" velocity="0.5"/>
+        <limit lower="0.01" upper="3.0" effort="100" velocity="0.5"/>
         <origin xyz="-0.01 0.012 -0.322" rpy="0 0 0"/>
     </joint>
     <joint name="left_wrist_joint" type="fixed">
@@ -471,14 +471,14 @@
         <child link="right_shoulder_pitch_link"/>
         <axis xyz="0 1 0"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <limit lower="0" upper="1.57" effort="4" velocity="0.5"/>
+        <limit lower="0" upper="1.57" effort="100" velocity="0.5"/>
     </joint>
     <joint name="right_shoulder_yaw_joint" type="revolute">
         <parent link="right_shoulder_pitch_link"/>
         <child link="right_shoulder_yaw_link"/>
         <axis xyz="0 0 1"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <limit lower="-1.5" upper="1.1" effort="1" velocity="0.5"/>
+        <limit lower="-1.5" upper="1.1" effort="100" velocity="0.5"/>
     </joint>
     
     
@@ -490,7 +490,7 @@
         <parent link="upper_right_arm_link"/>
         <child link="lower_right_arm_link"/>
         <axis xyz="1 0 0"/>
-        <limit lower="0.01" upper="3.0" effort="1" velocity="0.5"/>
+        <limit lower="0.01" upper="3.0" effort="100" velocity="0.5"/>
         <origin xyz="-0.01 0.012 -0.322" rpy="0 0 0"/>
     </joint>
     <joint name="right_wrist_joint" type="fixed">
