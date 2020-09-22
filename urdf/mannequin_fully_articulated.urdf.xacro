@@ -67,7 +67,7 @@
 
 	<link name="upper_body_link">
     	<visual>
-            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <origin rpy="0.01 0 0" xyz="0 -0.01 0"/>
             <geometry>
                 <!-- Material color set to white in blender -->
                 <mesh filename="package://mannequin/models/mannequin/meshes/upper_body_formatted.dae"/>
@@ -168,7 +168,7 @@
     <xacro:property name="pseudo_mass" value="0.01"/>
     <xacro:property name="pseudo_I" value="4e-07"/>
     <xacro:property name="arm_vertical_offset" value="0.23"/>
-    <xacro:property name="upper_arm_horizontal_offset" value="0.17"/>
+    <xacro:property name="upper_arm_horizontal_offset" value="0.18"/>
     <xacro:property name="lower_arm_horizontal_offset" value="0.34"/>
     <xacro:macro name="arm" params="side reflection">
     
@@ -271,7 +271,7 @@
 		    <child link="${side}_shoulder_roll_link"/>
 		    <axis xyz="${reflection} 0 0"/>
 		    <limit lower="-1.05" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
-		    <origin xyz="-.02 ${upper_arm_horizontal_offset * reflection} ${arm_vertical_offset}" rpy="0 0 0"/>
+		    <origin xyz="0 ${upper_arm_horizontal_offset * reflection} ${arm_vertical_offset}" rpy="0 0 0"/>
 		</joint>
 		<joint name="${side}_shoulder_pitch_joint" type="revolute">
 	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
@@ -318,27 +318,6 @@
 		    <mu2>10.0</mu2>
 		    <material>Gazebo/Red</material>
 		</gazebo>
-    	<link name="${side}_elbow_pronation_link">
-    		<visual>
-		        <origin rpy="0 0 0" xyz="0 0 0"/>
-		        <geometry>
-		            <sphere radius="${pseudo_radius}"/>
-		        </geometry>
-		    </visual>
-		    <inertial>
-		        <origin xyz="0 0 0" rpy="0 0 0"/>
-		        <mass value="${pseudo_mass}" />
-		        <inertia ixx="${pseudo_I}" ixy="0.0" ixz="0.0" iyy="${pseudo_I}" iyz="0.0" izz="${pseudo_I}"/>
-		    </inertial>
-		    
-    	</link>
-    	<gazebo reference="${side}_elbow_pronation_link">
-		    <kp>1000.0</kp>
-		    <kd>1000.0</kd>
-		    <mu1>10.0</mu1>
-		    <mu2>10.0</mu2>
-		    <material>Gazebo/Green</material>
-		</gazebo>
 		<link name="${side}_lower_arm_link">
 			<visual>
 		        <origin rpy="0.0 0 0" xyz="0 0 0"/>
@@ -372,19 +351,10 @@
 		    <child link="${side}_elbow_flexion_link"/>
 		    <axis xyz="0 -1 0"/>
 		    <limit lower="-1.05" upper="3.14" effort="50" velocity="${joint_velocity}"/>
-		    <origin xyz="0 0 ${-1 * lower_arm_horizontal_offset}" rpy="0 0 0"/>
-		</joint>
-		<joint name="${side}_elbow_pronation_joint" type="revolute">
-	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    <parent link="${side}_elbow_flexion_link"/>
-		    <child link="${side}_elbow_pronation_link"/>
-		    <axis xyz="0 0 ${reflection}"/>
-		    <limit lower="-1.3" upper="3.14" effort="50" velocity="${joint_velocity}"/>
-	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    <origin xyz="0 0 0" rpy="0 0 0"/>
+		    <origin xyz="0 0 ${-1 * lower_arm_horizontal_offset}" rpy="0 0.03 0"/>
 		</joint>
 		<joint name="${side}_lower_arm_joint" type="fixed">
-		    <parent link="${side}_elbow_pronation_link"/>
+		    <parent link="${side}_elbow_flexion_link"/>
 		    <child link="${side}_lower_arm_link"/>
 		</joint>
 		
@@ -410,27 +380,6 @@
 		    <mu1>10.0</mu1>
 		    <mu2>10.0</mu2>
 		    <material>Gazebo/Red</material>
-		</gazebo>
-		<link name="${side}_wrist_deviation_link">
-    		<visual>
-		        <origin rpy="0 0 0" xyz="0 0 0"/>
-		        <geometry>
-		            <sphere radius="${pseudo_radius}"/>
-		        </geometry>
-		    </visual>
-		    <inertial>
-		        <origin xyz="0 0 0" rpy="0 0 0"/>
-		        <mass value="${pseudo_mass}" />
-		        <inertia ixx="${pseudo_I}" ixy="0.0" ixz="0.0" iyy="${pseudo_I}" iyz="0.0" izz="${pseudo_I}"/>
-		    </inertial>
-		    
-    	</link>
-    	<gazebo reference="${side}_wrist_deviation_link">
-		    <kp>1000.0</kp>
-		    <kd>1000.0</kd>
-		    <mu1>10.0</mu1>
-		    <mu2>10.0</mu2>
-		    <material>Gazebo/Green</material>
 		</gazebo>
 		<link name="${side}_hand_link">
 			<visual>
@@ -467,16 +416,8 @@
 		    <limit lower="-1.396" upper="1.22" effort="5" velocity="${joint_velocity}"/>
 		    <origin xyz="0 0 -0.25" rpy="0 0 0"/>
 		</joint>
-		<joint name="${side}_wrist_deviation_joint" type="revolute">
-	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    <parent link="${side}_wrist_flexion_link"/>
-		    <child link="${side}_wrist_deviation_link"/>
-		    <axis xyz="0 ${reflection} 0"/>
-		    <limit lower="-0.523" upper="0.349" effort="5" velocity="${joint_velocity}"/>
-		    <origin xyz="0 ${reflection*0.01} 0" rpy="0 0 0"/>
-		</joint>
 		<joint name="${side}_hand_joint" type="fixed">
-		    <parent link="${side}_wrist_deviation_link"/>
+		    <parent link="${side}_wrist_flexion_link"/>
 		    <child link="${side}_hand_link"/>
 		    <origin xyz="0 0 0" rpy="0 0 ${1.57*reflection}"/>
 		</joint>
@@ -523,15 +464,6 @@
 		        <mechanicalReduction>50</mechanicalReduction>
 		    </actuator>
 		</transmission>
-		<transmission name="${side}elbowpronationtran">
-		    <type>transmission_interface/SimpleTransmission</type>
-		    <joint name="${side}_elbow_pronation_joint">
-		        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    </joint>
-		    <actuator name="${side}elbowpronationmotor">
-		        <mechanicalReduction>50</mechanicalReduction>
-		    </actuator>
-		</transmission>
 		
 		<!-- Wrist actuators -->
 		<transmission name="${side}wristflexiontran">
@@ -540,15 +472,6 @@
 		        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 		    </joint>
 		    <actuator name="${side}wristflexionmotor">
-		        <mechanicalReduction>50</mechanicalReduction>
-		    </actuator>
-		</transmission>
-		<transmission name="${side}wristdeviationtran">
-		    <type>transmission_interface/SimpleTransmission</type>
-		    <joint name="${side}_wrist_deviation_joint">
-		        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    </joint>
-		    <actuator name="${side}wristdeviationmotor">
 		        <mechanicalReduction>50</mechanicalReduction>
 		    </actuator>
 		</transmission>
@@ -654,7 +577,7 @@
 		    <axis xyz="0 1 0"/>
 		    <!-- Kodak's does not have data on thigh ROM, I estimated here -->
 		    <limit lower="-1.3" upper="1.57" effort="${leg_joint_effort}" velocity="${leg_joint_velocity}"/>
-		    <origin xyz="-0.01 ${reflection*0.097} 0.025" rpy="0 -0.05 0"/>
+		    <origin xyz="-0.015 ${reflection*0.097} 0.025" rpy="0 -0.1 0"/>
 		</joint>
 		
 		<joint name="${side}_knee_joint" type="revolute">
@@ -662,9 +585,8 @@
 		    <parent link="${side}_thigh_link"/>
 		    <child link="${side}_calf_link"/>
 		    <axis xyz="0 1 0"/>
-		    <!-- Kodak's does not have data on thigh ROM, I estimated here -->
 		    <limit lower="-0.17" upper="2.36" effort="${leg_joint_effort}" velocity="${leg_joint_velocity}"/>
-		    <origin xyz="0 0 -0.433" rpy="0 0.1 0"/>
+		    <origin xyz="0 0 -0.433" rpy="0 -0.1 0"/>
 		</joint>
 		
 		<joint name="${side}_ankle_joint" type="revolute">
@@ -674,7 +596,7 @@
 		    <axis xyz="0 1 0"/>
 		    <!-- Kodak's does not have data on thigh ROM, I estimated here -->
 		    <limit lower="-0.35" upper="0.87" effort="${leg_joint_effort}" velocity="${leg_joint_velocity}"/>
-		    <origin xyz="0 0 -0.433" rpy="0 0 0"/>
+		    <origin xyz="0 0 -0.433" rpy="0 -1.0 0"/>
 		</joint>
 		
 		

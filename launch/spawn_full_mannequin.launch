@@ -11,6 +11,8 @@
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
     args="-urdf -x 0 -y 0 -z 1.2  -model mannequin -param robot_description"/>
     
+    <!-- Script that will delete the mannequin when the spawn nodes are cancelled, so don't need to remove controllers and mann separately -->
+    <node name="remove_model_service_client" pkg="mannequin" type="kill_sim_on_exit.py" output="screen" />
     
     <!-- Create a static transform from map to the mannequin -->
     <node pkg="tf2_ros" type="static_transform_publisher" name="map2baseframe" args="1 0 0 0 0 0 1 map base_link" />
@@ -28,16 +30,13 @@
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/mannequin" 
     args="left_shoulder_roll left_shoulder_pitch left_shoulder_yaw
-    	  left_elbow_flexion left_elbow_pronation
+    	  left_elbow_flexion 
     	  
           right_shoulder_roll right_shoulder_pitch right_shoulder_yaw
-          right_elbow_flexion right_elbow_pronation
-    	  right_wrist_flexion right_wrist_deviation left_wrist_flexion left_wrist_deviation
+          right_elbow_flexion 
+    	  right_wrist_flexion left_wrist_flexion 
     	  torso_lr head_tilt
     	  left_thigh left_knee left_ankle 
     	  right_thigh right_knee right_ankle"/>
     	  
-    <!-- -->
 </launch>
-
-<!-- -->
