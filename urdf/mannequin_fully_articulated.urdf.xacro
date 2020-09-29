@@ -10,7 +10,7 @@
         </plugin>
     </gazebo>
     
-    <xacro:property name="joint_effort" value="100"/>
+    <xacro:property name="joint_effort" value="200"/>
     <xacro:property name="joint_velocity" value="0.5"/>
 
     <!-- * * * Link Definitions * * * -->
@@ -67,7 +67,7 @@
 
 	<link name="upper_body_link">
     	<visual>
-            <origin rpy="0.01 0 0" xyz="0 -0.01 0"/>
+            <origin rpy="0.01 0 0" xyz="0 -0.005 0"/>
             <geometry>
                 <!-- Material color set to white in blender -->
                 <mesh filename="package://mannequin/models/mannequin/meshes/upper_body_formatted.dae"/>
@@ -133,7 +133,7 @@
         <child link="upper_body_link"/>
         <axis xyz="1 0 0"/> <!-- As is, the mannequin torso can only bend side to side, as this is what I have ROM data on-->
         <limit lower="-0.611" upper="0.611" effort="1000" velocity="${joint_velocity}"/>
-        <origin xyz="0 0 0.260" rpy="0 0 0"/>
+        <origin xyz="0 0 0.265" rpy="0 0 0"/>
     </joint>
     <joint name="neck_joint" type="revolute">
 	    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
@@ -167,8 +167,8 @@
     <xacro:property name="pseudo_radius" value="0.01"/>
     <xacro:property name="pseudo_mass" value="0.01"/>
     <xacro:property name="pseudo_I" value="4e-07"/>
-    <xacro:property name="arm_vertical_offset" value="0.23"/>
-    <xacro:property name="upper_arm_horizontal_offset" value="0.18"/>
+    <xacro:property name="arm_vertical_offset" value="0.24"/>
+    <xacro:property name="upper_arm_horizontal_offset" value="0.188"/>
     <xacro:property name="lower_arm_horizontal_offset" value="0.34"/>
     <xacro:macro name="arm" params="side reflection">
     
@@ -351,7 +351,7 @@
 		    <child link="${side}_elbow_flexion_link"/>
 		    <axis xyz="0 -1 0"/>
 		    <limit lower="-1.05" upper="3.14" effort="50" velocity="${joint_velocity}"/>
-		    <origin xyz="0 0 ${-1 * lower_arm_horizontal_offset}" rpy="0 0.03 0"/>
+		    <origin xyz="0 -0.01 ${-1 * lower_arm_horizontal_offset}" rpy="0 0.05 0"/>
 		</joint>
 		<joint name="${side}_lower_arm_joint" type="fixed">
 		    <parent link="${side}_elbow_flexion_link"/>
@@ -383,7 +383,7 @@
 		</gazebo>
 		<link name="${side}_hand_link">
 			<visual>
-		        <origin rpy="0.0 0 0" xyz="0 0 0"/>
+		        <origin rpy="0.0 -0.2 3.14" xyz="0 0 0"/>
 		        <geometry>
 		            <!-- Material color set to white in blender -->
 		            <mesh filename="package://mannequin/models/mannequin/meshes/hand_formatted.dae"/>

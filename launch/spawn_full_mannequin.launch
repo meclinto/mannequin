@@ -12,7 +12,7 @@
     args="-urdf -x 0 -y 0 -z 1.2  -model mannequin -param robot_description"/>
     
     <!-- Script that will delete the mannequin when the spawn nodes are cancelled, so don't need to remove controllers and mann separately -->
-    <node name="remove_model_service_client" pkg="mannequin" type="kill_sim_on_exit.py" output="screen" />
+    <node name="remove_model_service_client" pkg="mannequin" type="kill_sim_on_exit.py" output="screen" args="mannequin"/>
     
     <!-- Create a static transform from map to the mannequin -->
     <node pkg="tf2_ros" type="static_transform_publisher" name="map2baseframe" args="1 0 0 0 0 0 1 map base_link" />
