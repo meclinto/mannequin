@@ -21,8 +21,8 @@ if __name__ == "__main__":
 			break
 		roll.data = float(input("Enter shoulder ROLL: "))
 		pitch.data = float(input("Enter shoulder PITCH: "))
-		yaw.data = float(input("Enter shoulder YAW: "))
-		mannequin.right_shoulder_pub_once(roll,pitch,yaw)
+		#yaw.data = float(input("Enter shoulder YAW: "))
+		mannequin.right_shoulder_pub_once(roll,pitch)
 		rospy.sleep(0.5)
 	
 	

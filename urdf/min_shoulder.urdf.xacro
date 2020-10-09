@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mannequin">
 
+	<!-- Purpose of this file: simplify the shoulder joint and body segments to be more stable -->
 	<!-- Body and weight measurements come from "Kodak's Ergonomic Design for People at Work" 50th percentile woman -->
 	
     <!-- Puts mannequin in Gazebo sim -->
@@ -127,12 +128,10 @@
         <child link="lower_body_link"/>
         <origin xyz="0 0 1" rpy="0 0 0"/>
     </joint>
-    <joint name="torso_mid_joint" type="revolute">
-	    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <joint name="torso_mid_joint" type="fixed">
         <parent link="lower_body_link"/>
         <child link="upper_body_link"/>
         <axis xyz="1 0 0"/> <!-- As is, the mannequin torso can only bend side to side, as this is what I have ROM data on-->
-        <limit lower="-0.611" upper="0.611" effort="10000" velocity="${joint_velocity}"/>
         <origin xyz="0 0 0.265" rpy="0 0 0"/>
     </joint>
     <joint name="neck_joint" type="revolute">
@@ -143,16 +142,7 @@
         <limit lower="-0.785" upper="0.785" effort="${joint_effort}" velocity="${joint_velocity}"/>
         <origin xyz="0 0.0 0.358" rpy="0 0 0"/>
     </joint>
-    <transmission name="torsotran">
-	    <type>transmission_interface/SimpleTransmission</type>
-		<joint name="torso_mid_joint">
-	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-	    </joint>
-		<actuator name="torsomotor">
-	        <mechanicalReduction>50</mechanicalReduction>
-	    </actuator>
-	</transmission>
-	<transmission name="necktran">
+    <transmission name="headtran">
 	    <type>transmission_interface/SimpleTransmission</type>
 		<joint name="neck_joint">
 	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
@@ -216,27 +206,6 @@
 		    <mu2>10.0</mu2>
 		    <material>Gazebo/Green</material>
 		</gazebo>
-    	<link name="${side}_shoulder_yaw_link">
-    		<visual>
-		        <origin rpy="0 0 0" xyz="0 0 0"/>
-		        <geometry>
-		            <sphere radius="${pseudo_radius}"/>
-		        </geometry>
-		    </visual>
-		    <inertial>
-		        <origin xyz="0 0 0" rpy="0 0 0"/>
-		        <mass value="${pseudo_mass}" />
-		        <inertia ixx="${pseudo_I}" ixy="0.0" ixz="0.0" iyy="${pseudo_I}" iyz="0.0" izz="${pseudo_I}"/>
-		    </inertial>
-		    
-    	</link>
-    	<gazebo reference="${side}_shoulder_yaw_link">
-		    <kp>10000.0</kp>
-		    <kd>10000.0</kd>
-		    <mu1>10.0</mu1>
-		    <mu2>10.0</mu2>
-		    <material>Gazebo/Blue</material>
-		</gazebo>
 		<link name="${side}_upper_arm_link">
 			<visual>
 		        <origin rpy="0.0 0 0" xyz="0 0 0"/>
@@ -281,16 +250,8 @@
 		    <limit lower="-1.3" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
 		    <origin xyz="0 0 0" rpy="0 0 0"/>
 		</joint>
-		<joint name="${side}_shoulder_yaw_joint" type="revolute">
-	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    <parent link="${side}_shoulder_pitch_link"/>
-		    <child link="${side}_shoulder_yaw_link"/>
-		    <axis xyz="0 0 ${-1*reflection}"/>
-		    <limit lower="-1.0" upper="1.5" effort="${joint_effort}" velocity="${joint_velocity}"/>
-		    <origin xyz="0 0 0" rpy="0 0 0"/>
-		</joint>
 		<joint name="${side}_upper_arm_joint" type="fixed">
-		    <parent link="${side}_shoulder_yaw_link"/>
+		    <parent link="${side}_shoulder_pitch_link"/>
 		    <child link="${side}_upper_arm_link"/>
 		    <origin xyz="0 0 0" rpy="0 0 0"/>
 		</joint>
@@ -443,15 +404,6 @@
 		        <mechanicalReduction>50</mechanicalReduction>
 		    </actuator>
 		</transmission>
-		<transmission name="${side}shoulderyawtran">
-		    <type>transmission_interface/SimpleTransmission</type>
-		    <joint name="${side}_shoulder_yaw_joint">
-		        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    </joint>
-		    <actuator name="${side}shoulderyawmotor">
-		        <mechanicalReduction>50</mechanicalReduction>
-		    </actuator>
-		</transmission>
 		
 		
 		<!-- Elbow actuators -->
@@ -570,13 +522,10 @@
 		</gazebo>
 		
 		
-		<joint name="${side}_thigh_joint" type="revolute">
-	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+		<joint name="${side}_thigh_joint" type="fixed">
 		    <parent link="lower_body_link"/>
 		    <child link="${side}_thigh_link"/>
 		    <axis xyz="0 1 0"/>
-		    <!-- Kodak's does not have data on thigh ROM, I estimated here -->
-		    <limit lower="-1.3" upper="1.57" effort="${leg_joint_effort}" velocity="${leg_joint_velocity}"/>
 		    <origin xyz="-0.015 ${reflection*0.097} 0.025" rpy="0 -0.1 0"/>
 		</joint>
 		
@@ -599,16 +548,6 @@
 		    <origin xyz="0 0 -0.433" rpy="0 -1.0 0"/>
 		</joint>
 		
-		
-		<transmission name="${side}hiprolltran">
-		    <type>transmission_interface/SimpleTransmission</type>
-		    <joint name="${side}_thigh_joint">
-		        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-		    </joint>
-		    <actuator name="${side}hiprollmotor">
-		        <mechanicalReduction>50</mechanicalReduction>
-		    </actuator>
-		</transmission>
 		<transmission name="${side}kneerolltran">
 		    <type>transmission_interface/SimpleTransmission</type>
 		    <joint name="${side}_knee_joint">
@@ -634,7 +573,95 @@
     <xacro:leg side="right" reflection="1"/>
     <xacro:leg side="left" reflection="-1"/>
     
+    <xacro:macro name="muscle" params="radius length parent">
+    	<link name="muscle_${parent}_0">
+    		<visual>
+    			<origin rpy="0 0 0" xyz="0 0 0"/>
+    			<geometry>
+    				<cylinder radius="${radius}" length="${length/2}"/>
+    			</geometry>
+        	</visual>
+        	<collision>
+		        <origin rpy="0 0 0" xyz="0 0 0"/>
+		        <geometry>
+		            <cylinder radius="${radius}" length="${length/2}"/>
+		        </geometry>
+		    </collision>
+		    <inertial>
+		        <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <mass value="0.01" />
+		        <inertia ixx="2.43333333333e-05" ixy="0.0" ixz="0.0" iyy="2.43333333333e-05" iyz="0.0" izz="3.2e-05"/>
+		    </inertial>
+    	</link>
+    	<gazebo reference="muscle_${parent}_0">
+		    <kp>500.0</kp>
+		    <kd>500.0</kd>
+		    <mu1>10.0</mu1>
+		    <mu2>10.0</mu2>
+		    <material>Gazebo/White</material>
+		</gazebo>
+		
+		<link name="muscle_${parent}_1">
+    		<visual>
+    			<origin rpy="0 0 0" xyz="0 0 0"/>
+    			<geometry>
+    				<cylinder radius="${radius}" length="${length/2}"/>
+    			</geometry>
+        	</visual>
+        	<collision>
+		        <origin rpy="0 0 0" xyz="0 0 0"/>
+		        <geometry>
+		            <cylinder radius="${radius}" length="${length/2}"/>
+		        </geometry>
+		    </collision>
+		    <inertial>
+		        <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <mass value="0.01" />
+		        <inertia ixx="2.43333333333e-05" ixy="0.0" ixz="0.0" iyy="2.43333333333e-05" iyz="0.0" izz="3.2e-05"/>
+		    </inertial>
+    	</link>
+    	<gazebo reference="muscle_${parent}_1">
+		    <kp>500.0</kp>
+		    <kd>500.0</kd>
+		    <mu1>10.0</mu1>
+		    <mu2>10.0</mu2>
+		    <material>Gazebo/White</material>
+		</gazebo>
+		
+		<joint name="muscle_${parent}_top_joint" type="fixed">
+    		<parent link="${parent}"/>
+		    <child link="muscle_${parent}_0"/>
+		    <origin xyz="0.08 0 -0.25" rpy="0 -0.9 0"/>
+	 	</joint>
     
+    	<joint name="muscle_${parent}_mid_joint" type="prismatic">
+    		<parent link="muscle_${parent}_0"/>
+		    <child link="muscle_${parent}_1"/>
+		    <axis xyz="0 0 1"/>
+		    <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+		    <limit lower="${-0.19*length}" upper="0" velocity="${0.19*length}" effort="10"/>
+    	</joint>
+    	
+    	<joint name="muscle_${parent}_bottom_joint" type="fixed">
+    		<parent link="muscle_${parent}_0"/>
+		    <child link="left_lower_arm_link"/>
+		    <origin xyz="0.02 0.12 -0.14" rpy="0 0.9 0"/>
+		    
+	 	</joint>
+    	
+    	<transmission name="muscle_${parent}_tran">
+	    <type>transmission_interface/SimpleTransmission</type>
+		<joint name="muscle_${parent}_mid_joint">
+	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+	    </joint>
+		<actuator name="muscle_${parent}_motor">
+	        <mechanicalReduction>50</mechanicalReduction>
+	    </actuator>
+	</transmission>
+    
+    </xacro:macro>
+    
+    <xacro:muscle radius="0.008" length="0.200" parent="left_upper_arm_link"/>
     
     
 

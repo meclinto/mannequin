@@ -11,7 +11,7 @@ class MoveMannequin(object):
 		#arms
 		self.left_shoulder_roll = rospy.Publisher("/mannequin/left_shoulder_roll/command", Float64, queue_size=1)
 		self.left_shoulder_pitch = rospy.Publisher("/mannequin/left_shoulder_pitch/command", Float64, queue_size=1)
-		self.left_shoulder_yaw = rospy.Publisher("/mannequin/left_shoulder_yaw/command", Float64, queue_size=1)
+		#self.left_shoulder_yaw = rospy.Publisher("/mannequin/left_shoulder_yaw/command", Float64, queue_size=1)
 		self.left_elbow_flexion = rospy.Publisher("/mannequin/left_elbow_flexion/command", Float64, queue_size=1)
 		self.left_elbow_pronation = rospy.Publisher("/mannequin/left_elbow_pronation/command", Float64, queue_size=1)
 		self.left_wrist_flexion = rospy.Publisher("/mannequin/left_wrist_flexion/command", Float64, queue_size=1)
@@ -19,23 +19,23 @@ class MoveMannequin(object):
 		
 		self.right_shoulder_pitch = rospy.Publisher("/mannequin/right_shoulder_pitch/command", Float64, queue_size=1)
 		self.right_shoulder_roll = rospy.Publisher("/mannequin/right_shoulder_roll/command", Float64, queue_size=1)
-		self.right_shoulder_yaw = rospy.Publisher("/mannequin/right_shoulder_yaw/command", Float64, queue_size=1)
+		#self.right_shoulder_yaw = rospy.Publisher("/mannequin/right_shoulder_yaw/command", Float64, queue_size=1)
 		self.right_elbow_flexion = rospy.Publisher("/mannequin/right_elbow_flexion/command", Float64, queue_size=1)
 		self.right_elbow_pronation = rospy.Publisher("/mannequin/right_elbow_pronation/command", Float64, queue_size=1)
 		self.right_wrist_flexion = rospy.Publisher("/mannequin/right_wrist_flexion/command", Float64, queue_size=1)
 		self.right_wrist_deviation = rospy.Publisher("/mannequin/right_wrist_deviation/command", Float64, queue_size=1)
 		
 		#legs
-		self.left_thigh = rospy.Publisher("/mannequin/left_thigh/command", Float64, queue_size=1)
+		#self.left_thigh = rospy.Publisher("/mannequin/left_thigh/command", Float64, queue_size=1)
 		self.left_knee = rospy.Publisher("/mannequin/left_knee/command", Float64, queue_size=1)
 		self.left_ankle = rospy.Publisher("/mannequin/left_ankle/command", Float64, queue_size=1)
 		
-		self.right_thigh = rospy.Publisher("/mannequin/right_thigh/command", Float64, queue_size=1)
+		#self.right_thigh = rospy.Publisher("/mannequin/right_thigh/command", Float64, queue_size=1)
 		self.right_knee = rospy.Publisher("/mannequin/right_knee/command", Float64, queue_size=1)
 		self.right_ankle = rospy.Publisher("/mannequin/right_ankle/command", Float64, queue_size=1)
 		
 		#trunk parts
-		self.torso = rospy.Publisher("/mannequin/torso_lr/command", Float64, queue_size=1)
+		#self.torso = rospy.Publisher("/mannequin/torso_lr/command", Float64, queue_size=1)
 		self.head = rospy.Publisher("/mannequin/head_tilt/command", Float64, queue_size=1)
 		
 		self.init = Float64()
@@ -185,7 +185,7 @@ class MoveMannequin(object):
 		
 	#### Right side functions ####
     # Right arm pub once functions
-	def right_shoulder_pub_once(self,roll,pitch,yaw):
+	def right_shoulder_pub_once(self,roll,pitch):
 		while not rospy.is_shutdown():
 			self.right_shoulder_roll.publish(roll)
 			if self.right_shoulder_roll.get_num_connections() > 0:
@@ -194,11 +194,11 @@ class MoveMannequin(object):
 			self.right_shoulder_pitch.publish(pitch)
 			if self.right_shoulder_pitch.get_num_connections() > 0:
 				break
-		while not rospy.is_shutdown():
+		"""while not rospy.is_shutdown():
 			self.right_shoulder_yaw.publish(yaw)
 			if self.right_shoulder_yaw.get_num_connections() > 0:
 				rospy.loginfo("Right shoulder pos updated: r=%d  p=%d  y:%d",roll.data,pitch.data,yaw.data)
-				break
+				break"""
 				
 	
 		

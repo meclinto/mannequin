@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cable">
+
+	<xacro:property name="radius" value="0.002" />
+	<xacro:property name="base_length" value="0.01" />
+	<xacro:property name="offset" value="-0.01" />
+	
+	<gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/muscle</robotNamespace>
+        </plugin>
+    </gazebo>
+    
+    <link name="base_link">
+    	<visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${base_length}"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${base_length}"/>
+            </geometry>
+        </collision>
+	</link>
+    <gazebo reference="base_link">
+        <kp>500.0</kp>
+        <kd>500.0</kd>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+    <link name="base_link2">
+    	<visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${base_length}"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${base_length}"/>
+            </geometry>
+        </collision>
+	</link>
+    <gazebo reference="base_link2">
+        <kp>500.0</kp>
+        <kd>500.0</kd>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+    
+    
+    <joint name="base_link_joint" type="fixed">
+    	<parent link="base_link"/>
+	    <child link="base_link2"/>
+	    <axis xyz="1 0 0"/>
+	    <origin xyz="0 0 ${base_length}" rpy="0 0 0"/>
+    </joint>
+    
+    <!-- Macro to create a hydraulic soft "muscle" actuator -->
+    <!-- radius and length are of unactuated muscle, parent is name of parent link -->
+    <xacro:macro name="muscle" params="radius length parent">
+    	<link name="muscle_${parent}_0">
+    		<visual>
+    			<origin rpy="0 0 0" xyz="0 0 0"/>
+    			<geometry>
+    				<cylinder radius="${radius}" length="${length/2}"/>
+    			</geometry>
+        	</visual>
+        	<collision>
+		        <origin rpy="0 0 0" xyz="0 0 0"/>
+		        <geometry>
+		            <cylinder radius="${radius}" length="${length/2}"/>
+		        </geometry>
+		    </collision>
+		    <inertial>
+		        <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <mass value="0.01" />
+		        <inertia ixx="2.43333333333e-05" ixy="0.0" ixz="0.0" iyy="2.43333333333e-05" iyz="0.0" izz="3.2e-05"/>
+		    </inertial>
+    	</link>
+    	<gazebo reference="muscle_${parent}_0">
+		    <kp>500.0</kp>
+		    <kd>500.0</kd>
+		    <mu1>10.0</mu1>
+		    <mu2>10.0</mu2>
+		    <material>Gazebo/White</material>
+		</gazebo>
+		
+		<link name="muscle_${parent}_1">
+    		<visual>
+    			<origin rpy="0 0 0" xyz="0 0 0"/>
+    			<geometry>
+    				<cylinder radius="${radius}" length="${length/2}"/>
+    			</geometry>
+        	</visual>
+        	<collision>
+		        <origin rpy="0 0 0" xyz="0 0 0"/>
+		        <geometry>
+		            <cylinder radius="${radius}" length="${length/2}"/>
+		        </geometry>
+		    </collision>
+		    <inertial>
+		        <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <mass value="0.01" />
+		        <inertia ixx="2.43333333333e-05" ixy="0.0" ixz="0.0" iyy="2.43333333333e-05" iyz="0.0" izz="3.2e-05"/>
+		    </inertial>
+    	</link>
+    	<gazebo reference="muscle_${parent}_1">
+		    <kp>500.0</kp>
+		    <kd>500.0</kd>
+		    <mu1>10.0</mu1>
+		    <mu2>10.0</mu2>
+		    <material>Gazebo/White</material>
+		</gazebo>
+		
+		<joint name="muscle_${parent}_top_joint" type="fixed">
+    		<parent link="${parent}"/>
+		    <child link="muscle_${parent}_0"/>
+	 	</joint>
+    
+    	<joint name="muscle_${parent}_mid_joint" type="prismatic">
+    		<parent link="muscle_${parent}_0"/>
+		    <child link="muscle_${parent}_1"/>
+		    <axis xyz="0 0 1"/>
+		    <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+		    <limit lower="${-0.19*length}" upper="0" velocity="${0.19*length}" effort="5"/>
+    	</joint>
+    	
+    	<transmission name="muscle_${parent}_tran">
+	    <type>transmission_interface/SimpleTransmission</type>
+		<joint name="muscle_${parent}_mid_joint">
+	        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+	    </joint>
+		<actuator name="muscle_${parent}_motor">
+	        <mechanicalReduction>50</mechanicalReduction>
+	    </actuator>
+	</transmission>
+    
+    </xacro:macro>
+    
+    <xacro:muscle radius="0.008" length="0.200" parent="base_link2"/>
+
+
+</robot>

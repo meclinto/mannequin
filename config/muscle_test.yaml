@@ -1,0 +1,14 @@
+muscle:
+    # Publish all joint states -----------------------------------
+    joint_state_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 50
+
+    # Position Controllers ---------------------------------------
+    muscle:
+      type: effort_controllers/JointPositionController
+      joint: muscle_base_link2_mid_joint
+      pid: {p: 50.0, i: 0.1, d: 3.0}
+    
+
+

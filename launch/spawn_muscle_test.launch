@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!-- Spawn the mannequin -->
+    <param name="robot_description" command="xacro --inorder '$(find mannequin)/urdf/actuator.urdf.xacro'" />
+
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -x 0 -y 0 -z 1.2  -model muscle -param robot_description"/>
+    
+    <!-- Script that will delete the mannequin when the spawn nodes are cancelled, so don't need to remove controllers and mann separately -->
+    <node name="remove_model_service_client" pkg="mannequin" type="kill_sim_on_exit.py" output="screen" args="muscle"/>
+    
+    <!-- Create a static transform from map to the mannequin -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map2baseframe" args="1 0 0 0 0 0 1 map base_link" />
+    
+    <!-- Broadcast robot joint transforms -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_states_pub">
+    	<remap from="/joint_states" to="/muscle/joint_states" /> 
+    </node>
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_pub">
+    	<remap from="/joint_states" to="/muscle/joint_states" /> 
+    </node>
+    
+    <!-- load the controllers -->
+    <rosparam file="$(find mannequin)/config/muscle_test.yaml" command="load"/>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/muscle" 
+    args="muscle"/>
+    	  
+</launch>
